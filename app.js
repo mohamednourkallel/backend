@@ -6,9 +6,14 @@ const app = express();
 const categorieRouter =require("./routes/categorie.route")
 const scategorieRouter =require("./routes/scategorie.route")
 const articleRouter =require("./routes/article.route")
+const paymentRouter = require( "./routes/payment.route.js")
+const userRouter =require("./routes/user.route")
+const cors=require('cors')
+
 
 //BodyParser Middleware
 app.use(express.json());
+app.use(cors())
 
 mongoose.set("strictQuery", false);
 // Connexion à la base données
@@ -27,6 +32,9 @@ res.send("mangoose");
 app.use('/api/articles', articleRouter);
 app.use('/api/scategories', scategorieRouter);
 app.use('/api/categories', categorieRouter);
+app.use('/api/payment', paymentRouter);
+app.use('/api/users', userRouter);
+app.use(express.static(__dirname + '/'));
 app.listen(process.env.PORT, () => {
 console.log(`Server is listening on port ${process.env.PORT}`); });
 module.exports = app;

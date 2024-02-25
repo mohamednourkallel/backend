@@ -6,7 +6,7 @@ const SCategorie=require("../models/scategorie")
 // afficher la liste des categories.
 router.get('/', async (req, res, )=> {
 try {
-const scat = await SCategorie.find();
+const scat = await SCategorie.find().populate('categorieID').exec();
 
 res.status(200).json(scat);
 } catch (error) {
@@ -34,7 +34,8 @@ router.get('/:scategorieId',async(req, res)=>{
 try {
 const scat = await
 
-SCategorie.findById(req.params.scategorieId);
+SCategorie.findById(req.params.scategorieId).populate('categorieID').exec();
+
 
 
 res.status(200).json(scat);
@@ -52,6 +53,9 @@ try {
 const scat1 = {
 nomscategorie:nomscategorie,imagescat:imagescat,categorieID:categorieID
 , _id:id };
+if (categorieID !== null && categorieID !== '') {
+    scat1.categorieID = categorieID;
+  }
 
 await SCategorie.findByIdAndUpdate(id, scat1);
 
